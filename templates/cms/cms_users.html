@@ -1,0 +1,56 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    CMS用户管理
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block head_block %}
+    <link rel="stylesheet" href="{{ static('cms/css/cms_cmsusers.css') }}">
+{% endblock %}
+
+{% block main_content_block %}
+    <div class="top-box">
+        <a href="{{ url_for('cms.add_cms_user') }}" class="btn btn-warning">添加管理员</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <th>用户名</th>
+            <th>加入时间</th>
+            <th>分组</th>
+            <th>状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.join_time }}</td>
+                    <td>{% for role in user.roles %}
+                        {{ role.name }}
+                        {% if not loop.last %},{% endif %}
+                    {% endfor %}
+                    </td>
+                    <td>
+                        {% if user.is_active %}
+                            <span class="label label-success">可用</span>
+                        {% else %}
+                            <span class="label label-danger">已拉黑</span>
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        {% if user.id != cms_user.id %}
+                            <a class="btn btn-primary btn-xs" href="{{ url_for('cms.edit_cmsuser',user_id=user.id) }}">编辑</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

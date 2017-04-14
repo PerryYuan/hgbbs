@@ -1,0 +1,41 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    添加管理员
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block head_block %}
+    <script src="{{ static('cms/js/add_cms_user.js') }}"></script>
+{% endblock %}
+
+{% block main_content_block %}
+    <form action="" method="post" class="form-reset">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="text" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" id="username" name="username" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" class="form-control">
+        </div>
+        <div class="checkbox">
+            {% for role in roles %}
+                <label>
+                    <input type="checkbox" name="roles" value="{{ role.id }}">{{ role.name }}
+                </label>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-reset" id="submit">立即添加</button>
+        </div>
+    </form>
+{% endblock %}

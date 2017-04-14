@@ -1,0 +1,13 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    首页
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block main_content_block %}
+    欢迎您，{{ cms_user.username }}
+{% endblock %}

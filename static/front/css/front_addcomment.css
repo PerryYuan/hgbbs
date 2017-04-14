@@ -1,0 +1,12 @@
+#editor{
+    height: 350px;
+}
+
+.reply-post{
+    padding: 10px;
+}
+
+.reply-post .c_content{
+    margin-top: 5px;
+    margin-left: 5px;
+}

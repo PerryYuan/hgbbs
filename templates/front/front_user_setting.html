@@ -1,0 +1,55 @@
+{% extends 'front/front_base.html' %}
+
+{% block head %}
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.dev.js"></script>
+    <script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+    <script src="{{ url_for('static',filename='common/xtqiniu.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('front/css/front_user_setting.css') }}">
+    <script src="{{ static('front/js/front_user_setting.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+    修改个人信息
+{% endblock %}
+
+{% block container %}
+    <div class="container-inner">
+        <h2>个人信息</h2>
+        <form action="">
+        <div class="form-group">
+            <label for="">用户名</label>
+            <input type="text" class="form-control" name="username" placeholder="请输入用户名" value="{{ front_user.username }}">
+        </div>
+        <div class="form-group">
+            <label for="">真实姓名</label>
+            <input type="text" class="form-control" name="realname" placeholder="请输入真实姓名" value="{{ front_user.realname or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="">邮箱</label>
+            <input type="email" class="form-control" name="email" placeholder="请输入邮箱"  value="{{ front_user.email or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="">qq</label>
+            <input type="text" class="form-control" name="qq" placeholder="请输入qq" value="{{ front_user.qq or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="">头像</label>
+            <div>
+                <img src="{{ front_user.avatar or static('images/logo.jpg') }}" class="img-circle avatar-img" alt="点击选择头像" id="avatar-img">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="">个性签名</label>
+            <textarea class="form-control" id="signature" placeholder="请输入个性签名" rows="4">{{ front_user.signature or '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <button id="save-btn" class="btn btn-primary">确认修改</button>
+        </div>
+    </form>
+    </div>
+{% endblock %}

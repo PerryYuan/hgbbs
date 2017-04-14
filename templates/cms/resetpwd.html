@@ -1,0 +1,33 @@
+{% extends 'cms/cms_base.html' %}
+{% from 'common/common_macros.html' import static %}
+{% block title_block %}
+    修改密码
+{% endblock %}
+
+{% block head_block %}
+    <script src="{{ static('cms/js/resetpwd.js') }}"></script>
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block main_content_block %}
+    <form action="" method="post" class="form-reset">
+        <div class="form-group">
+            <label for="oldpwd">原密码</label>
+            <input type="password" class="form-control" id="oldpwd" name="oldpwd" placeholder="原密码">
+        </div>
+        <div class="form-group">
+            <label for="newpwd">新密码</label>
+            <input type="password" class="form-control" id="newpwd" name="newpwd" placeholder="新密码">
+        </div>
+        <div class="form-group">
+            <label for="newpwd_repeat">确认新密码</label>
+            <input type="password" class="form-control" id="newpwd_repeat" name="newpwd_repeat" placeholder="确认新密码">
+        </div>
+        <div class="form-group" id="btn-group">
+            <button class="btn btn-primary btn-reset" id="btn_save">立即保存</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'front/front_user_info_base.html' %}
+
+{% block right_container %}
+    <div class="right-container">
+            <div class="container-inner">
+                <p class="info-title">个人资料</p>
+                <ul class="info-list">
+                    <li>用户名：{{ user.username }}</li>
+                    <li>用户组：无分组</li>
+                    <li>邮箱：{{ user.email or '未填写' }}</li>
+                    <li>QQ：{{ user.qq or '未填写' }}</li>
+                    <li>真实姓名：{{ user.realname or '未填写' }}</li>
+                    <li>性别：
+                        {% if user.gender == 1 %}
+                            男
+                        {% elif user.gender == 2 %}
+                            女
+                        {% else %}
+                            保密
+                        {% endif %}</li>
+                    <li>个性签名：{{ user.signature or '这个家伙很懒，没有留下什么~' }}</li>
+                    <li>论坛积分：{{ user.points or 0 }}</li>
+                </ul>
+                <br>
+                <p class="info-title">活跃概括</p>
+                <ul class="info-list">
+                    <li>发表帖子数：{{ user.posts.filter_by(is_removed=False).count() }}</li>
+                    <li>评论数量：{{ user.comments.filter_by(is_removed=False).count() }}</li>
+                    <li>上次登录时间：{{ user.last_login_time or user.old_login_time }}</li>
+                    <li>加入论坛时间：{{ user.join_time }}</li>
+                </ul>
+            </div>
+        </div>
+{% endblock %}
+

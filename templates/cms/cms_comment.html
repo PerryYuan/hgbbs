@@ -1,0 +1,88 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    CMS评论管理
+{% endblock %}
+
+{% block head_block %}
+    <style>
+        .comment-list{
+            background-color: #fff;
+            border: 1px solid #d7d7d7;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            width: 1100px;
+        }
+        .title{
+            padding: 10px 15px;
+            border-bottom: 1px solid #d7d7d7;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .content{
+            padding: 7px 15px;
+        }
+        .origin-comment-group{
+            background: #fafafa;
+        }
+        .origin-comment-group div{
+            padding: 10px;
+        }
+        .remove-btn{
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            text-align: right;
+        }
+    </style>
+    <script>
+
+        $(function () {
+            $('.remove-comment').click(function (event) {
+                event.preventDefault();
+                var comment_id = $(this).attr('data-comment-id');
+                console.log(comment_id);
+                phajax.post({
+                    'url': '/remove_comment/',
+                    'data': {'comment_id':comment_id},
+                    'success': function (data) {
+                        if(data['code'] == 200){
+                            xtalert.alertSuccessToast('评论移除成功');
+                            setTimeout(function () {
+                                window.location.reload();
+                            },500);
+                        }else{
+                            xtalert.alertInfoToast(data['message']);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block main_content_block %}
+     <div class="container">
+        {% for comment in comments %}
+            <div class="comment-list">
+                <div class="title">帖子：<a href="{{ url_for('front.post_detail',post_id=comment.post.id) }}">{{ comment.post.title }}</a></div>
+                <div class="content">
+                    {% if comment.origin_comment %}
+                        <div class="origin-comment-group">回复{{ comment.origin_comment.author.username }}：<div>{{ comment.origin_comment.content|safe }}</div></div>
+                    {% endif %}
+                    <p>{{ comment.content|safe }}</p>
+                </div>
+                <div class="remove-btn">
+                    <button class="btn btn-primary btn-xs remove-comment" data-comment-id="{{ comment.id }}">移除</button>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

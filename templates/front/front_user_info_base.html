@@ -1,0 +1,44 @@
+{% extends 'front/front_base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_user_info.css') }}">
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block container %}
+    <div class="top-group">
+        <div class="avatar-group">
+            <img src="{{ user.avatar or static('images/logo.jpg') }}" class="avatar" alt="">
+        </div>
+        <div class="user-group">
+            <p class="username">yuan</p>
+            <p>积分：{{ user.points or 0 }}</p>
+            <p>个性签名：{{ user.signature or '这个家伙很懒，没有留下什么~' }}</p>
+        </div>
+    </div>
+    <div class="body-group">
+        <div class="left-container">
+            <div class="list-group">
+                <span class="list-group-item list-title">
+                    个人资料
+                </span>
+                <a href="{{ url_for('front.user_info',user_id=user.id) }}"
+                   {% if active == 0 %}
+                        class="list-group-item active"
+                   {% else %}
+                        class="list-group-item"
+                   {% endif %}>资料</a>
+                <a href="{{ url_for('front.user_post',user_id=user.id) }}"
+                   {% if active == 1 %}
+                        class="list-group-item active"
+                   {% else %}
+                        class="list-group-item"
+                   {% endif %}>帖子</a>
+            </div>
+        </div>
+        {% block right_container %}{% endblock %}
+    </div>
+{% endblock %}

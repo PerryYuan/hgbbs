@@ -1,0 +1,86 @@
+{% extends 'front/front_user_info_base.html' %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        .theme-nav-list{
+            color: #333;
+            display: inline-block;
+            line-height: 30px;
+            padding: 0 10px;
+        }
+
+        .current{
+            background: #f3f3f3;
+        }
+        .comment-p{
+            margin-top: 6px;
+        }
+    </style>
+    <script>
+        $(function () {
+            function my_click(click_btn,hide_btn,click_list,hide_list) {
+                click_btn.click(function (event) {
+                    event.preventDefault();
+                    hide_btn.removeClass('current');
+                    $(this).addClass('current');
+                    click_list.show();
+                    hide_list.hide();
+                });
+            }
+            my_click($('#comment-btn'),$('#post-btn'),$('.comment-list'),$('.post-list'));
+            my_click($('#post-btn'),$('#comment-btn'),$('.post-list'),$('.comment-list'));
+        });
+    </script>
+{% endblock %}
+
+{% block right_container %}
+    <div class="right-container">
+        <div class="theme-nav">
+            <a href="#" class="theme-nav-list current" id="post-btn">帖子</a>
+            <a href="#" id="comment-btn" class="theme-nav-list">回复</a>
+        </div>
+        <div class="post-list">
+            <table class="table">
+                <thead>
+                    <th>标题：</th>
+                    <th>板块</th>
+                    <th>回复/查看</th>
+                </thead>
+                <tbody>
+                        {% for post in user.posts.filter_by(is_removed=False) %}
+                            <tr>
+                                <td><a href="{{ url_for('front.post_detail',post_id=post.id) }}">{{ post.title }}</a></td>
+                                <td>{{ post.board.name }}</td>
+                                <td>{{ post.comments|length }}/{{ post.read_count }}</td>
+                            </tr>
+                        {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="comment-list" style="display: none">
+            <table class="table">
+                <thead>
+                    <th>评论</th>
+                    <th>板块</th>
+                </thead>
+                <tbody>
+                    {% for comment in user.comments %}
+                        {% if comment.post.is_removed==False %}
+                            <tr>
+                                <td>
+                                    <p>
+                                        帖子：<a href="{{ url_for('front.post_detail',post_id=comment.post.id) }}">{{ comment.post.title|safe }}</a>
+                                    </p>
+                                    <p class="comment-p">{{ comment.content|safe }}</p>
+                                </td>
+                                <td>{{ comment.post.board.name }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

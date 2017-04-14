@@ -1,0 +1,100 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    帖子管理
+{% endblock %}
+
+{% block head_block %}
+    <style>
+        .left-select{
+            float: left;
+        }
+        .right-select{
+            float: right;
+        }
+    </style>
+    <script src="{{ static('cms/js/cms_post.js') }}"></script>
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block main_content_block %}
+    <div class="select-box">
+        <div class="left-select">
+            <label>排序 </label>
+            <select class="sort-select" id="post-sort">
+                <option value="1" {% if sort_type == 1 %}selected{% endif %}>按时间排序</option>
+                <option value="2" {% if sort_type == 2 %}selected{% endif %}>按加精排序</option>
+                <option value="3" {% if sort_type == 3 %}selected{% endif %}>按评论排序</option>
+            </select>
+        </div>
+        <div class="right-select">
+            <label>板块过滤 </label>
+            <select class="sort-select" id="post-filter">
+                <option value="0" {% if board_id == 0 %}selected{% endif %}>全部板块</option>
+                {% for board in boards %}
+                    <option value="{{ board.id }}" {% if board_id == board.id %}selected{% endif %}>{{ board.name }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <th>标题</th>
+                <th>发布时间</th>
+                <th>作者</th>
+                <th>所属板块</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td><a href="#">{{ post.title }}</a></td>
+                        <td>{{ post.create_time }}</td>
+                        <td>{{ post.author.username }}</td>
+                        <td>{{ post.board.name }}</td>
+                        <td>
+                            {% if post.highlight %}
+                                <button class="btn btn-primary btn-xs is-highlight" data-is-highlight="1" data-post-id="{{ post.id }}">取消加精</button>
+                            {% else %}
+                                <button class="btn btn-info btn-xs is-highlight" data-is-highlight="0" data-post-id="{{ post.id }}">加精</button>
+                            {% endif %}
+                            <button class="btn btn-danger btn-xs remove-post" data-post-id="{{ post.id }}">移除</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% if page_total > 1 %}
+            <div class="footer-group" style="text-align: center">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    {% if c_page<=1 %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% else %}
+                        <li><a href="{{ url_for('cms.cms_post',page=c_page-1,sort=sort_type,board=board_id) }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                    {% endif %}
+                    {% for page in pages %}
+                        {% if c_page == page %}
+                            <li class="active"><span>{{ page }}</span></li>
+                        {% else %}
+                            <li><a href="{{ url_for('cms.cms_post',page=page,sort=sort_type,board=board_id) }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if c_page>=page_total %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% else %}
+                        <li><a href="{{ url_for('cms.cms_post',page=c_page+1,sort=sort_type,board=board_id) }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

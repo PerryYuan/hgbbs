@@ -1,0 +1,76 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block title_block %}
+    前台用户编辑
+{% endblock %}
+
+{% block head_block %}
+    <style>
+        .deal-active{
+            float: right;
+        }
+    </style>
+    <script src="{{ static('cms/js/front_black.js') }}"></script>
+{% endblock %}
+
+{% block page_title_block %}
+    {{ self.title_block() }}
+{% endblock %}
+
+{% block main_content_block %}
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>用户名</td>
+                <td>{{ front_user.username }}</td>
+                <td>电话号码</td>
+                <td>{{ front_user.telephone }}</td>
+            </tr>
+            <tr>
+                <td>加入时间</td>
+                <td>{{ front_user.join_time }}</td>
+                <td>状态</td>
+                <td>
+                    {% if front_user.is_active %}
+                        <label class="label label-success">可用</label>
+                    {% else %}
+                        <label class="label label-danger">已禁用</label>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>真实姓名</td>
+                <td>{{ front_user.realname or '未填写' }}</td>
+                <td>性别</td>
+                <td>
+                    {% if front_user.gender == 1 %}
+                        男
+                    {% elif front_user.gender == 2 %}
+                        女
+                    {% else %}
+                        保密
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>{{ front_user.email or '未填写' }}</td>
+                <td>论坛积分</td>
+                <td>{{ front_user.points }}</td>
+            </tr>
+            <tr>
+                <td>qq号</td>
+                <td>{{ front_user.qq or '未填写' }}</td>
+                <td>个性签名</td>
+                <td>{{ front_user.signature or '未填写' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        {% if front_user.is_active  %}
+            <button class="btn btn-danger deal-active" data-active="1" data-user-id="{{ front_user.id }}">拉入黑名单</button>
+        {% else %}
+            <button class="btn btn-warning deal-active" data-active="2" data-user-id="{{ front_user.id }}">移出黑名单</button>
+        {% endif %}
+    </div>
+{% endblock %}
