@@ -123,7 +123,7 @@
                         class="list-group-item"
                     {% endif %}>
                     {{ board.name }}
-                    <span class="badge">{{ board.post_count }}</span>
+                    <span class="badge">{{ board.posts.filter_by(is_removed=False).count() }}</span>
                 </a>
             {% endfor %}
         </div>

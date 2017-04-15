@@ -7,7 +7,7 @@ $(function () {
         event.preventDefault();
         var mail = $('input[name=mail]').val();
         phajax.get({
-            'url':'/captcha/',
+            'url':'/cms/captcha/',
             'data':{
                 'mail':mail
             },
@@ -35,7 +35,7 @@ $(function () {
         var captcha = captchaInput.val();
 
         phajax.post({
-            'url':'/resetmail/',
+            'url':'/cms/resetmail/',
             'data': {
                 'mail': mail,
                 'captcha': captcha

@@ -9,7 +9,7 @@ $(function () {
         var post_id = $(this).attr('data-post-id');
 
         phajax.post({
-            'url':'/highlight/',
+            'url':'/cms/highlight/',
             'data':{
                 'is_highlight': !is_highlight,
                 'post_id': post_id

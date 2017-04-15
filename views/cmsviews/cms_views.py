@@ -281,7 +281,7 @@ def delete_board():
     if not board:
         return xtjson.json_params_error(u'请传入正确的信息。')
     #如果帖子数大于0，不能删除
-    if len(board.posts) > 0:
+    if board.posts.count() > 0:
         return xtjson.json_params_error(u'板块存在帖子，不能删除')
     db.session.delete(board)
     db.session.commit()

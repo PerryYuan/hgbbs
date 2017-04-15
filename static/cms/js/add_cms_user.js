@@ -32,7 +32,7 @@ $(function () {
         }
 
         phajax.post({
-            'url':'/addcmsuser/',
+            'url':'/cms/addcmsuser/',
             'data':{
                 'email':email,
                 'password':password,

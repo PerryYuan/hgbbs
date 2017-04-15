@@ -42,6 +42,7 @@ def add_cms_role(name,desc,permissions):
     db.session.add(cms_role)
     db.session.commit()
     return u'角色添加成功'
+
 @manager.option('-t',dest='telephone')
 @manager.option('-u',dest='username')
 @manager.option('-p',dest='password')

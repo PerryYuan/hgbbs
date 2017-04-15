@@ -65,7 +65,7 @@ def post_detail(post_id):
 def page_deal(page,sort_type,board_id):
     # cprofile = cProfile.Profile()
     # cprofile.runcall(IndexModelsHelper.get_posts,page,sort_type,board_id)
-    context = IndexModelsHelper.get_posts_cache(page,sort_type,board_id)
+    context = IndexModelsHelper.get_posts(page,sort_type,board_id)
     # print cprofile.print_stats()
     return flask.render_template('front/front_index.html',**context)
 

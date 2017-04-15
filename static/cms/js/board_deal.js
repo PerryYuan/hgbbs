@@ -9,7 +9,7 @@ $(function () {
             'text':'请输入板块名称',
             'confirmCallback':function (inputValue) {
                 phajax.post({
-                    'url':'/addboard/',
+                    'url':'/cms/addboard/',
                     'data':{
                         'board_name':inputValue
                     },
@@ -37,7 +37,7 @@ $(function () {
                'text':'请输入板块名称',
                'confirmCallback':function (inputValue) {
                     phajax.post({
-                        'url':'/editboard/',
+                        'url':'/cms/editboard/',
                         'data':{
                             'board_name':inputValue,
                             'board_id':board_id
@@ -66,7 +66,7 @@ $(function () {
                'msg':'你确认删除该板块吗？',
                'confirmCallback':function () {
                     phajax.post({
-                        'url':'/deleteboard/',
+                        'url':'/cms/deleteboard/',
                         'data':{
                             'board_id':board_id
                         },

@@ -8,7 +8,7 @@ $(function () {
         var user_id = $(this).attr('data-user-id');
         var active = $(this).attr('data-active');
         phajax.post({
-           'url':'/frontuserblack/',
+           'url':'/cms/frontuserblack/',
             'data':{
                 'user_id':user_id
             },

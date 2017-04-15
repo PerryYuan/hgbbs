@@ -12,7 +12,7 @@ $(function () {
             role_id_list.push($(this).val());
         });
         phajax.post({
-            'url':'/edit_cmsuser/',
+            'url':'/cms/edit_cmsuser/',
             'data':{
                 'user_id':user_id,
                 'role_id_list':role_id_list
@@ -33,7 +33,7 @@ $(function () {
         event.preventDefault();
         var user_id = $('#submit').attr('data-user-id');
         phajax.post({
-            'url':'/remove_black/',
+            'url':'/cms/remove_black/',
             'data':{'user_id':user_id},
             'success':function (data) {
                 if(data['code'] == 200){

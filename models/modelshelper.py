@@ -37,7 +37,8 @@ class IndexModelsHelper(object):
             posts = posts.filter(PostModel.board_id == board_id)
 
         total = posts.count()
-        boards = [json.loads(board) for board in BBSRedis.board.boards()]
+        # boards = [json.loads(board) for board in BBSRedis.board.boards()]
+        boards = Board.query.all()
         pages = []
         page_temp = page - 1
         while page_temp > 0 and page_temp % 5 != 0:

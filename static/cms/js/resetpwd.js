@@ -14,7 +14,7 @@ $(function () {
         newpwd_repeat = newpwd_repeatInput.val();
 
         phajax.post({
-            'url':'/resetpwd/',
+            'url':'/cms/resetpwd/',
             'data':{
                 'oldpwd':oldpwd,
                 'newpwd':newpwd,
