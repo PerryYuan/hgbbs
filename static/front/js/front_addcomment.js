@@ -19,7 +19,7 @@ $(function () {
                 if(data['code'] == 200){
                     xtalert.alertSuccessToast('恭喜，评论发表成功。');
                     setTimeout(function () {
-                        window.location = 'http://ph.com:5000/post_detail/'+post_id+'/';
+                        window.location = window.location.protocol+'//'+window.location.host + '/post_detail/'+post_id+'/';
                     },500);
                 }else{
                     xtalert.alertInfoToast(data['message']);
