@@ -3,21 +3,14 @@ from datetime import datetime
 
 from flask import Flask
 import flask
-from exts import db,mail
-import config
+from exts import db,mail,app
+
 from views.cmsviews import cms_views
 from views.frontviews import front_view,front_exts,front_post
 from flask_wtf import CSRFProtect
-
-
-
-app = Flask(__name__)
-app.config.from_object(config)
-db.init_app(app)
 app.register_blueprint(cms_views.bp)
 app.register_blueprint(front_exts.bp)
 CSRFProtect(app)
-mail.init_app(app)
 
 
 @app.template_filter('time_filter')

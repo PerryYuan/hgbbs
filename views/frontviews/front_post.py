@@ -101,6 +101,7 @@ def add_comment():
                     comment.origin_comment = origin_comment
             db.session.add(comment)
             db.session.commit()
+
             return xtjson.json_result()
         else:
             return xtjson.json_params_error(form.get_errors())

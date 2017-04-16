@@ -4,8 +4,8 @@ from flask import views,session
 
 from decorators.front_decorators import login_required
 from front_exts import bp
-import top.api
 import constants
+from task import celery_send_sms
 from utils import xtjson,xtcache,captchautils
 from utils.captcha.xtcaptcha import Captcha
 from forms.frontforms import FrontRegistForm,FrontLoginForm, UserSettingForm
@@ -13,6 +13,7 @@ from models.frontmodels import FrontUser
 from exts import db
 from datetime import datetime
 import front_common
+
 try:
     from StringIO import StringIO
 except:
@@ -72,6 +73,7 @@ class FrontLoginView(views.MethodView):
 
 bp.add_url_rule('/login/',endpoint='login',view_func=FrontLoginView.as_view('login'))
 
+
 @bp.route('/alidayu_captcha/')
 def alidayu_captcha():
     telephone = flask.request.args.get('telephone')
@@ -80,15 +82,7 @@ def alidayu_captcha():
     if xtcache.get(telephone):
         return xtjson.json_params_error(message=u'短信已发送，短时间内不能重复发送')
     captcha = captchautils.get_captcha(4)
-    req = top.api.AlibabaAliqinFcSmsNumSendRequest(constants.ALIDAYU_URL, 80)
-    req.set_app_info(top.appinfo(constants.ALIDAYU_APP_KEY, constants.ALIDAYU_APP_SECRET))
-    req.extend = "123456"
-    req.sms_type = "normal"
-    req.sms_free_sign_name = constants.ALIDAYU_SIGN_NAME
-    telephone = "{}".format(telephone)
-    req.sms_param = "{\"code\":\"%s\",\"username\":\"%s\"}" % (captcha,telephone)
-    req.rec_num = telephone
-    req.sms_template_code = constants.ALIDAYU_TEMPLATE_CODE
+    req = celery_send_sms(captcha,telephone)
     try:
         resp = req.getResponse()
         print(resp)

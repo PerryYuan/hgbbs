@@ -1,26 +1,26 @@
 .container_wrap{
     margin: 10px auto;
-    width: 990px;
+    width: 80%;
 }
 
 .left-container{
-    width: 728px;
+    width: 60%;
     float: left;
 }
 
 .post-container{
     margin: 0 0 10px 0;
     background: #fff;
-    padding-bottom: 35px;
+    padding-bottom: 2%;
     border: 1px solid #e6e6e6;
 }
 
 .post-container-inner{
-    width: 655px;
-    margin: 26px auto;
+    width: 55%;
+    margin: 4% auto;
 }
 .post-top h2{
-    margin-bottom: 30px;
+    margin-bottom: 4%;
 }
 .post-info{
     font-size: 12px;
@@ -53,13 +53,13 @@
 .comment-list-group{
     background: #fff;
     margin-top: 10px;
-    width: 728px;
+    width: 75%;
     border: 1px solid #e6e6e6;
     padding: 10px 0 20px;
 }
 
 .comment-list-group-inner{
-    width: 660px;
+    width: 65%;
     margin: 20px auto 0;
 }
 

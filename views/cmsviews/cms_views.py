@@ -1,21 +1,21 @@
 # coding:utf8
-from cms_exts import bp
 import flask
 from flask.views import MethodView
 
-from models.modelshelper import IndexModelsHelper
-from utils.helper import Helper
-from models.cmsmodels import CMSUser,CMSRole,Permission
-from models.frontmodels import FrontUser
+import constants
+from cms_exts import bp
+from decorators.cms_decorators import login_required,is_super_required
+from exts import db
 from forms.cmsforms import CMSLoginForm,CMSReSetPWD,\
     CMSReSetMail,CMSAddUser,BoardForm,HighlightForm
-import constants
-from exts import db
-from decorators.cms_decorators import login_required,is_super_required
-from utils import xtjson,mailutils,captchautils,xtcache
-from shortuuid import uuid
+from models.cmsmodels import CMSUser,CMSRole
 from models.commonmodels import Board,PostModel,HighLightPostModel, CommentModel
-from datetime import datetime
+from models.frontmodels import FrontUser
+from models.modelshelper import IndexModelsHelper
+from task import celery_send_mail
+from utils import xtjson, captchautils,xtcache
+from utils.helper import Helper
+
 
 @bp.route('/')
 @login_required
@@ -364,7 +364,7 @@ def get_captcha():
     r = re.compile(r'\w+@\w+.\w+')
     if not r.findall(mail):
         return xtjson.json_params_error(u'邮箱格式不正确')
-    if mailutils.send_mail(subject=u'验证码',recipients=mail,body=u'您的验证码是：%s'%captcha):
+    if celery_send_mail.delay(subject=u'验证码',recipients=mail,body=u'您的验证码是：%s'%captcha):
         xtcache.set(mail,captcha)
         return xtjson.json_result()
     else:

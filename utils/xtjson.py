@@ -10,7 +10,8 @@ class HttpCode(object):
     servererror = 500
 
 def json_result(code=HttpCode.ok,message='',data={},kwargs={}):
-    json_dict = {'code':code,'message':message,'data':data}
+    print data
+    json_dict = {'code':code,'message':message,'data':{}}
 
     if kwargs.keys():
         for k,v in kwargs.iteritems():
