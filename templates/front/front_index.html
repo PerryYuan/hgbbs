@@ -67,7 +67,7 @@
                                 <div class="auth-msg">
                                     <a href="#" class="user_name">{{ post.author.username }}</a>
                                     <span class="time">{{ post.create_time|time_filter }}</span>
-                                    <span class="comment-count">评论：10</span>
+                                    <span class="comment-count">评论：{{ post.comments.filter_by(is_removed=False).count() }}</span>
                                     <span class="read-count">阅读：{{ post.read_count }}</span>
                                 </div>
                             </div>

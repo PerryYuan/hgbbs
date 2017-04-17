@@ -50,7 +50,7 @@ def post_detail(post_id):
         flask.abort(404)
     post.read_count += 1
     db.session.commit()
-    comments = CommentModel.query.filter(CommentModel.post_id==post_id).order_by(CommentModel.create_time.desc())
+    comments = CommentModel.query.filter(CommentModel.is_removed==False,CommentModel.post_id==post_id).order_by(CommentModel.create_time.desc())
     post_stars = PostStar.query.filter(PostStar.post_id == post_id)
     if post_stars:
         post_star_ids = [star.author.id for star in post_stars]

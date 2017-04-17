@@ -18,7 +18,7 @@
                             <span>发表时间：{{ post.create_time }}</span>
                             <span>作者：{{ post.author.username }}</span>
                             <span>所属板块：{{ post.board.name|default('无板块') }}</span>
-                            <span class="comment-count">评论数：10</span>
+                            <span class="comment-count">评论数：{{ post.comments.filter_by(is_removed=False).count() }}</span>
                             <span class="read-count">阅读数：{{ post.read_count|default(0) }}</span>
                         </p>
                     </div>
@@ -68,7 +68,7 @@
                         <p>评论列表</p>
                     </div>
                     <ul class="comment-list">
-                        {% for comment in comments.filter_by(is_removed=False) %}
+                        {% for comment in comments %}
                             <li>
                                 <div class="comment-img">
                                     <a href="{{ url_for('front.user_info',user_id=comment.author.id) }}"><img class="user-head" src="{{ comment.author.avatar or static(filename='images/logo.jpg') }}" alt=""></a>

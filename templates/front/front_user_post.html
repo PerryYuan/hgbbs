@@ -52,7 +52,7 @@
                             <tr>
                                 <td><a href="{{ url_for('front.post_detail',post_id=post.id) }}">{{ post.title }}</a></td>
                                 <td>{{ post.board.name }}</td>
-                                <td>{{ post.comments|length }}/{{ post.read_count }}</td>
+                                <td>{{ post.comments.filter_by(is_removed=False).count() }}/{{ post.read_count }}</td>
                             </tr>
                         {% endfor %}
 
@@ -67,7 +67,7 @@
                 </thead>
                 <tbody>
                     {% for comment in user.comments %}
-                        {% if comment.post.is_removed==False %}
+                        {% if comment.post.is_removed==False and comment.is_removed==False %}
                             <tr>
                                 <td>
                                     <p>

@@ -44,7 +44,7 @@
                 var comment_id = $(this).attr('data-comment-id');
                 console.log(comment_id);
                 phajax.post({
-                    'url': '/remove_comment/',
+                    'url': '/cms/remove_comment/',
                     'data': {'comment_id':comment_id},
                     'success': function (data) {
                         if(data['code'] == 200){

@@ -46,7 +46,7 @@ class CommentModel(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     author = db.relationship('FrontUser',backref=db.backref('comments',lazy='dynamic'))
-    post = db.relationship('PostModel',backref='comments')
+    post = db.relationship('PostModel',backref=db.backref('comments',lazy='dynamic'))
 
     origin_id = db.Column(db.Integer,db.ForeignKey('comment.id'))
     origin_comment = db.relationship('CommentModel',backref='replys',remote_side=[id])

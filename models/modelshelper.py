@@ -31,8 +31,13 @@ class IndexModelsHelper(object):
             posts = db.session.query(PostModel).filter(PostModel.is_removed == False).outerjoin(PostStar). \
                 group_by(PostModel.id).order_by(db.func.count(PostStar.id).desc(), PostModel.create_time.desc())
         elif sort_type == cls.PostSortType.COMMENT_COUNT:
-            posts = db.session.query(PostModel).filter(PostModel.is_removed == False).outerjoin(CommentModel). \
-                group_by(PostModel.id).order_by(db.func.count(CommentModel.id).desc(), PostModel.create_time.desc())
+            # posts = db.session.query(PostModel).outerjoin(CommentModel).filter(PostModel.is_removed == False,CommentModel.is_removed==False). \
+            #     group_by(PostModel.id).order_by(db.func.count(CommentModel.id).desc(), PostModel.create_time.desc())
+            stmt = db.session.query(CommentModel.post_id,
+                                    db.func.count(CommentModel.post_id).label('post_count')).filter(CommentModel.is_removed==False).group_by(
+                CommentModel.post_id).subquery()
+            posts = db.session.query(PostModel).outerjoin(stmt, PostModel.id == stmt.c.post_id).filter(
+                PostModel.is_removed == False).order_by(stmt.c.post_count.desc(),PostModel.create_time.desc())
         if board_id:
             posts = posts.filter(PostModel.board_id == board_id)
 

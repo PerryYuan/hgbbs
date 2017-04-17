@@ -14,7 +14,7 @@
             <img src="{{ user.avatar or static('images/logo.jpg') }}" class="avatar" alt="">
         </div>
         <div class="user-group">
-            <p class="username">yuan</p>
+            <p class="username">{{ user.username }}</p>
             <p>积分：{{ user.points or 0 }}</p>
             <p>个性签名：{{ user.signature or '这个家伙很懒，没有留下什么~' }}</p>
         </div>

@@ -41,7 +41,7 @@ $(function () {
         event.preventDefault();
         var post_id = $(this).attr('data-post-id');
         phajax.post({
-            'url': '/remove_post/',
+            'url': '/cms/remove_post/',
             'data':{
                 'post_id': post_id
             },

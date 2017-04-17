@@ -33,7 +33,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ front_user.username }}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('front.user_info',user_id=front_user.id) }}" class="dropdown-toggle"><img class="user-avatar" src="{{ static('images/logo.jpg') }}" alt="">个人中心</a></li>
+                            <li><a href="{{ url_for('front.user_info',user_id=front_user.id) }}" class="dropdown-toggle"><img class="user-avatar" src="{{ front_user.avatar or static('images/logo.jpg') }}" alt="">个人中心</a></li>
                             <li><a href="{{ url_for('front.user_setting') }}">设置</a></li>
                             <li><a href="{{ url_for('front.logout') }}">退出登录</a></li>
                         </ul>
